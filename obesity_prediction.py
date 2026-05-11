@@ -34,7 +34,7 @@ from sklearn.metrics import (
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import svm
-from sklearn.tree import DecisionTreeClassifier, export_graphviz
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 
 # ============================================================
 # SECTION 2: LOAD DATASET
@@ -283,22 +283,21 @@ print("Accuracy score:", dt_accuracy)
 print("Confusion matrix:\n", confusion_matrix(y_test, y_pred_dt))
 print("Classification report:\n", classification_report(y_test, y_pred_dt))
 
-# Visualise Decision Tree
-try:
-    import graphviz
-    dot_data = export_graphviz(
-        clf_entropy,
-        out_file=None,
-        feature_names=X.columns,
-        filled=True,
-        rounded=True,
-        special_characters=True
-    )
-    graph = graphviz.Source(dot_data)
-    graph.render("outputs/fig7_decision_tree", format="png", cleanup=True)
-    print("Decision tree saved to outputs/fig7_decision_tree.png")
-except ImportError:
-    print("graphviz not installed — skipping tree visualisation.")
+# Visualise Decision Tree with matplotlib
+plt.figure(figsize=(24, 18))
+plot_tree(
+    clf_entropy,
+    feature_names=X.columns,
+    class_names=[str(c) for c in np.unique(y)],
+    filled=True,
+    rounded=True,
+    fontsize=10
+)
+plt.title("Decision Tree Visualization")
+plt.tight_layout()
+plt.savefig("outputs/fig7_decision_tree.png", dpi=150)
+plt.close()
+print("Decision tree saved to outputs/fig7_decision_tree.png")
 
 # ============================================================
 # SECTION 9: MODEL COMPARISON SUMMARY
