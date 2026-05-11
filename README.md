@@ -92,9 +92,9 @@ This project investigates the use of Artificial Intelligence (AI) methods to ass
 
 | Model | Accuracy | Precision | Recall | F1-Score |
 |---|---|---|---|---|
-| **KNN** | **76.32%** | **74.00%** | **76.32%** | **74.92%** |
-| SVM | 74.30% | 72.00% | 74.30% | 72.92% |
-| Logistic Regression | 69.77% | 68.00% | 69.77% | 68.86% |
-| Decision Tree | 64.73% | 65.00% | 64.73% | 64.86% |
+| **KNN** | **76.32%** | **77.00%** | **77.00%** | **76.00%** |
+| SVM | 74.30% | 77.00% | 74.00% | 74.00% |
+| Logistic Regression | 69.77% | 77.00% | 70.00% | 70.00% |
+| Decision Tree | 67.28% | 62.00% | 64.00% | 61.00% |
 
 **KNN achieved the highest accuracy (76.32%)** and the most balanced metrics across all obesity classes, making it the best-performing model for this dataset.

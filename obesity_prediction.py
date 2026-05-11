@@ -25,7 +25,10 @@ from sklearn.preprocessing import MaxAbsScaler, LabelEncoder
 from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
-    classification_report
+    classification_report,
+    precision_score,
+    recall_score,
+    f1_score
 )
 
 from sklearn.linear_model import LogisticRegression
@@ -151,16 +154,21 @@ cllg = LogisticRegression(max_iter=1000)
 cllg.fit(x_train, y_train)
 predictions = cllg.predict(x_test)
 
-print("Accuracy score:", accuracy_score(y_test, predictions))
+lr_accuracy = accuracy_score(y_test, predictions)
+lr_precision = precision_score(y_test, predictions, average='macro')
+lr_recall = recall_score(y_test, predictions, average='macro')
+lr_f1 = f1_score(y_test, predictions, average='macro')
+
+print("Accuracy score:", lr_accuracy)
 print("Confusion matrix:\n", confusion_matrix(y_test, predictions))
 print("Classification report:\n", classification_report(y_test, predictions))
 
 # Bar plot — Logistic Regression evaluation metrics
 lr_metrics = {
-    "Accuracy":  accuracy_score(y_test, predictions) * 100,
-    "Precision": 68.0,
-    "Recall":    69.77,
-    "F1-Score":  68.86
+    "Accuracy":  lr_accuracy * 100,
+    "Precision": lr_precision * 100,
+    "Recall":    lr_recall * 100,
+    "F1-Score":  lr_f1 * 100
 }
 
 plt.figure(figsize=(8, 6))
@@ -183,7 +191,12 @@ plt.close()
 print("\n" + "="*50)
 print("MODEL 2: K-NEAREST NEIGHBOR ALGORITHM")
 print("="*50)
+knn_accuracy = accuracy_score(y_test, pred)
+knn_precision = precision_score(y_test, pred, average='macro')
+knn_recall = recall_score(y_test, pred, average='macro')
+knn_f1 = f1_score(y_test, pred, average='macro')
 
+print("Accuracy score:", knn_accuracy
 knn = KNeighborsClassifier(n_neighbors=3)
 knn.fit(x_train, y_train)
 pred = knn.predict(x_test)
@@ -204,16 +217,21 @@ plt.close()
 
 # ============================================================
 # SECTION 7: MODEL 3 — SUPPORT VECTOR MACHINE (SVM)
-# ============================================================
+svm_accuracy = accuracy_score(y_test, y_pred)
+svm_precision = precision_score(y_test, y_pred, average='macro')
+svm_recall = recall_score(y_test, y_pred, average='macro')
+svm_f1 = f1_score(y_test, y_pred, average='macro')
 
-print("\n" + "="*50)
-print("MODEL 3: SUPPORT VECTOR MACHINE")
-print("="*50)
+print("Accuracy score:", svm_accuracy)
+print("Confusion matrix:\n", confusion_matrix(y_test, y_pred))
+print("Classification report:\n", classification_report(y_test, y_pred))
 
-clf = svm.SVC(kernel="linear")
-clf.fit(x_train, y_train)
-y_pred = clf.predict(x_test)
-
+# Bar plot — SVM evaluation metrics
+svm_metrics = {
+    "Accuracy":  svm_accuracy * 100,
+    "Precision": svm_precision * 100,
+    "Recall":    svm_recall * 100,
+    "F1-Score":  svm_f1 * 100
 print("Accuracy score:", accuracy_score(y_test, y_pred))
 print("Confusion matrix:\n", confusion_matrix(y_test, y_pred))
 print("Classification report:\n", classification_report(y_test, y_pred))
@@ -246,7 +264,12 @@ plt.close()
 print("\n" + "="*50)
 print("MODEL 4: DECISION TREE")
 print("="*50)
+dt_accuracy = accuracy_score(y_test, y_pred_dt)
+dt_precision = precision_score(y_test, y_pred_dt, average='macro')
+dt_recall = recall_score(y_test, y_pred_dt, average='macro')
+dt_f1 = f1_score(y_test, y_pred_dt, average='macro')
 
+print("Accuracy score:", dt_accuracy
 clf_entropy = DecisionTreeClassifier(
     criterion="entropy",
     random_state=100,
@@ -277,10 +300,10 @@ try:
 except ImportError:
     print("graphviz not installed — skipping tree visualisation.")
 
-# ============================================================
-# SECTION 9: MODEL COMPARISON SUMMARY
-# ============================================================
-
+# ===================lr_accuracy * 100, knn_accuracy * 100, svm_accuracy * 100, dt_accuracy * 100],
+    "Precision (%)": [lr_precision * 100, knn_precision * 100, svm_precision * 100, dt_precision * 100],
+    "Recall (%)": [lr_recall * 100, knn_recall * 100, svm_recall * 100, dt_recall * 100],
+    "F1-Score (%)": [lr_f1 * 100, knn_f1 * 100, svm_f1 * 100, dt_f1 * 100
 print("\n" + "="*50)
 print("MODEL COMPARISON SUMMARY")
 print("="*50)
