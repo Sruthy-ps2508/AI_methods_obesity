@@ -15,6 +15,8 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -54,7 +56,7 @@ for i, col in enumerate(data.select_dtypes(include="object").columns[:-1]):
 plt.tight_layout()
 plt.suptitle("Univariate Analysis of Categorical Variables", y=1.02)
 plt.savefig("outputs/appendix1_categorical_variables.png", bbox_inches="tight")
-plt.show()
+plt.close()
 
 # --- Appendix 2: Boxplot Analysis — Continuous Variables ---
 plt.figure(figsize=(18, 15))
@@ -64,7 +66,7 @@ for i, col in enumerate(data.select_dtypes(include="number").columns[:3]):
 plt.tight_layout()
 plt.suptitle("Boxplot Analysis of Continuous Variables", y=1.02)
 plt.savefig("outputs/appendix2_boxplot_continuous.png", bbox_inches="tight")
-plt.show()
+plt.close()
 
 # --- Appendix 3: Distribution Analysis — Numerical Lifestyle Variables ---
 plt.figure(figsize=(18, 15))
@@ -74,7 +76,7 @@ for i, col in enumerate(data.select_dtypes(include="number").columns[3:]):
 plt.tight_layout()
 plt.suptitle("Distribution Analysis of Numerical Lifestyle Variables", y=1.02)
 plt.savefig("outputs/appendix3_lifestyle_variables.png", bbox_inches="tight")
-plt.show()
+plt.close()
 
 # --- Appendix 4: Median Age Distribution for All Obesity Types ---
 data.groupby("NObeyesdad")["Age"].median().sort_values(ascending=False).plot(
@@ -85,7 +87,7 @@ plt.xlabel("NObeyesdad")
 plt.ylabel("Median Age")
 plt.tight_layout()
 plt.savefig("outputs/appendix4_median_age_obesity.png", bbox_inches="tight")
-plt.show()
+plt.close()
 
 # --- Appendix 5: Correlation Heatmap ---
 corr_data = data.copy()
@@ -98,7 +100,7 @@ sns.heatmap(corr_data.corr(), annot=True)
 plt.title("Heatmap of Variable Correlations")
 plt.tight_layout()
 plt.savefig("outputs/appendix5_correlation_heatmap.png", bbox_inches="tight")
-plt.show()
+plt.close()
 
 # ============================================================
 # SECTION 4: DATA PREPROCESSING
@@ -172,7 +174,7 @@ plt.ylabel("Percentage (%)")
 plt.ylim(0, 110)
 plt.tight_layout()
 plt.savefig("outputs/fig2_logistic_regression_metrics.png")
-plt.show()
+plt.close()
 
 # ============================================================
 # SECTION 6: MODEL 2 — K-NEAREST NEIGHBORS (KNN)
@@ -198,7 +200,7 @@ plt.xlabel("Predicted Labels")
 plt.ylabel("True Labels")
 plt.tight_layout()
 plt.savefig("outputs/fig4_knn_confusion_matrix.png")
-plt.show()
+plt.close()
 
 # ============================================================
 # SECTION 7: MODEL 3 — SUPPORT VECTOR MACHINE (SVM)
@@ -235,7 +237,7 @@ plt.ylabel("Percentage (%)")
 plt.ylim(0, 110)
 plt.tight_layout()
 plt.savefig("outputs/fig6_svm_metrics.png")
-plt.show()
+plt.close()
 
 # ============================================================
 # SECTION 8: MODEL 4 — DECISION TREE
@@ -318,7 +320,7 @@ ax.legend()
 ax.set_ylim(0, 100)
 plt.tight_layout()
 plt.savefig("outputs/model_comparison.png")
-plt.show()
+plt.close()
 
 print("\nAll outputs saved to the outputs/ folder.")
 print("Script complete.")
