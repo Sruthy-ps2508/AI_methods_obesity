@@ -1,61 +1,100 @@
-# Obesity Analysis with AI
+# AI Methods for Examining Obesity Status Using Social and Physical Activity Data
+
+**Author:** Sruthy Pattotil Sunilkumar  
+**Supervisor:** Prof. Eliseo Vilalta Perdomo  
+**Programme:** MSc Business Analytics — Aston University  
+**Module:** BDM200J – MSc Business Analytics Business Project  
+**Date:** January 2024
+
+---
 
 ## Overview
 
-This project explores the application of Artificial Intelligence (AI) methods to examine obesity, integrating both physical and social data sources. By leveraging machine learning techniques, we aim to analyze patterns, predict outcomes, and provide insights into obesity-related factors from diverse datasets.
+This project investigates the use of Artificial Intelligence (AI) methods to assess and predict an individual's obesity status based on their social behaviours and physical activity levels. Four machine learning classification models were trained, tested, and compared on a publicly available obesity dataset sourced from Kaggle.
 
-## Objectives
+---
 
-- **Physical Data Analysis**: Utilize AI to process biometric data such as BMI, body composition, activity levels, and health metrics.
-- **Social Data Integration**: Incorporate social determinants like socioeconomic status, lifestyle factors, environmental influences, and behavioral patterns.
-- **Predictive Modeling**: Develop models to identify risk factors, forecast obesity trends, and support preventive measures.
-- **Interdisciplinary Insights**: Combine physical and social data for a holistic understanding of obesity.
+## Research Objectives
 
-## Key Features
+- Identify significant factors influencing obesity (eating patterns, physical activity, water intake, etc.)
+- Build AI-based predictive models to classify individuals into obesity categories
+- Evaluate and compare model performance using standard classification metrics
+- Provide actionable insights for public health interventions and lifestyle modifications
 
-- Data preprocessing and integration from multiple sources
-- Machine learning algorithms for classification and regression
-- Visualization of obesity patterns and correlations
-- Evaluation of AI model performance on real-world data
+---
 
-## Technologies Used
+## Dataset
 
-- **Programming Language**: Python
-- **Libraries**: Pandas, NumPy, Scikit-learn, TensorFlow/PyTorch (for deep learning)
-- **Environment**: Virtual environment (venv) for dependency management
+- **Source:** Kaggle
+- **Records (after cleaning):** 1,981 entries
+- **Features:** 17 variables
+- **Target Variable:** `NObeyesdad` — Obesity Level (multi-class)
 
-## Installation
+### Variables
 
-1. Ensure Python 3.12 is installed.
-2. Create and activate a virtual environment:
-   ```
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1  # On Windows
-   ```
-3. Install required packages:
-   ```
-   pip install pandas numpy scikit-learn matplotlib
-   ```
+| Variable | Type | Description |
+|---|---|---|
+| Gender | Categorical | Person's gender |
+| Age | Continuous | Person's age |
+| Height | Continuous | Height in metres |
+| Weight | Continuous | Weight in kilograms |
+| Family History of Overweight | Binary | Family history of being overweight |
+| FAVC | Binary | Regular intake of high-calorie foods |
+| FCVC | Integer | Frequency of vegetable consumption |
+| NCP | Integer | Number of meals per day |
+| CAEC | Categorical | Food consumption between meals |
+| SMOKE | Binary | Smoking habit |
+| CH2O | Continuous | Daily water intake |
+| SCC | Binary | Calorie monitoring |
+| FAF | Continuous | Physical activity frequency (hours/week) |
+| TUE | Integer | Daily technology usage time |
+| CALC | Categorical | Alcohol consumption frequency |
+| MTRANS | Categorical | Primary mode of transport |
+| NObeyesdad | Categorical | **Target** — Obesity level |
 
-## Usage
+---
 
-1. Place your datasets in the project directory.
-2. Run data analysis scripts (e.g., `python sample.py` for basic tests).
-3. Customize and run AI models as per your analysis needs.
+## Data Preprocessing
 
-## Data Sources
+1. **Duplicate removal** — 24 duplicate rows identified and removed
+2. **Outlier handling** — Detected and removed using Z-scores and boxplots
+3. **Categorical encoding** — One-hot encoding for nominal variables; label encoding for ordinal/target variables
+4. **Feature scaling** — `MaxAbsScaler` applied to continuous features
+5. **Train/test split** — 80% training / 20% testing
 
-- Physical data: Health surveys, wearable device data, medical records.
-- Social data: Demographic information, community data, online behavior.
+---
 
-## Contributing
+## Models Used
 
-Contributions are welcome! Please fork the repository and submit pull requests for improvements.
+### 1. Logistic Regression (LR)
+- Library: `sklearn.linear_model.LogisticRegression`
+- Config: `max_iter=1000`
+- Role: Baseline model; interpretable and computationally efficient
 
-## License
+### 2. K-Nearest Neighbors (KNN)
+- Library: `sklearn.neighbors.KNeighborsClassifier`
+- Config: `n_neighbors=3`, Euclidean distance
+- Role: Non-parametric; effective for non-linear relationships
 
-This project is licensed under the MIT License.
+### 3. Support Vector Machine (SVM)
+- Library: `sklearn.svm.SVC`
+- Config: `kernel='linear'`
+- Role: High-dimensional classification; kernel trick for non-linear data
 
-## Contact
+### 4. Decision Tree (DT)
+- Library: `sklearn.tree.DecisionTreeClassifier`
+- Config: `criterion='entropy'`, `max_depth=3`, `min_samples_leaf=5`
+- Role: Interpretable; visualises feature-based decision paths
 
-For questions or collaborations, please reach out.
+---
+
+## Results
+
+| Model | Accuracy | Precision | Recall | F1-Score |
+|---|---|---|---|---|
+| **KNN** | **76.32%** | **74.00%** | **76.32%** | **74.92%** |
+| SVM | 74.30% | 72.00% | 74.30% | 72.92% |
+| Logistic Regression | 69.77% | 68.00% | 69.77% | 68.86% |
+| Decision Tree | 64.73% | 65.00% | 64.73% | 64.86% |
+
+**KNN achieved the highest accuracy (76.32%)** and the most balanced metrics across all obesity classes, making it the best-performing model for this dataset.
